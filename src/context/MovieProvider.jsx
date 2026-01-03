@@ -3,12 +3,17 @@ import Modal from "react-modal";
 import YouTube from "react-youtube";
 
 const opts = {
-  height: "390",
-  width: "640",
   playerVars: {
     autoplay: 1,
+    modestbranding: 1,
+    rel: 0,
   },
 };
+
+//responsive modal size
+const isMobile = window.innerWidth < 768;
+const modalWidth = isMobile ? Math.min(window.innerWidth * 0.95, 360) : 960;
+const modalHeight = Math.round((modalWidth * 9) / 16);
 
 export const MovieContext = createContext();
 
@@ -40,25 +45,42 @@ export const MovieProvider = ({ children }) => {
     <MovieContext.Provider value={{handleTrailer}}>
       {children} 
       {/* Thẻ con ngoài việc nó được truyền props value. Nó còn có thêm Modal ở dưới nếu click nữa */}
-      <Modal
+     <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
         style={{
           overlay: {
-            position: "fixed",
             zIndex: 9999,
+            backgroundColor: "rgba(0,0,0,0.8)",
           },
           content: {
             top: "50%",
             left: "50%",
-            right: "auto",
-            bottom: "auto",
             transform: "translate(-50%, -50%)",
+
+            width: `${modalWidth}px`,
+            height: `${modalHeight}px`,
+
+            background: "black",
+            border: "none",
+            padding: 0,
+            overflow: "hidden",
           },
         }}
-        contentLabel="Example Modal"
       >
-        <YouTube videoId={trailerKey} opts={opts} />
+        {trailerKey && (
+          <YouTube
+            videoId={trailerKey}
+            opts={{
+              width: modalWidth,
+              height: modalHeight,
+              playerVars: {
+                autoplay: 1,
+                rel: 0,
+              },
+            }}
+          />
+        )}
       </Modal>
     </MovieContext.Provider>
   );
