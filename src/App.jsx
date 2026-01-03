@@ -4,6 +4,7 @@ import Banner from "./components/Banner";
 import MovieList from "./components/MovieList";
 import MovieSearch from "./components/MovieSearch";
 import { MovieProvider } from "./context/MovieProvider";
+import Test from "./components/Test";
 
 function App() {
   const [movie, setMovie] = useState([]);
@@ -48,10 +49,7 @@ function App() {
       const url2 =
         "https://api.themoviedb.org/3/movie/top_rated?language=vi&page=1"; //API data của top
 
-      const [res1, res2] = await Promise.all([
-        fetch(url1, options),
-        fetch(url2, options),
-      ]);
+      const [res1, res2] = await Promise.all([fetch(url1, options), fetch(url2, options)]);
       const data1 = await res1.json();
       const data2 = await res2.json();
 

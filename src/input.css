@@ -1,7 +1,12 @@
 @import "tailwindcss";
+
 @theme {
   --banner: url("/banner.png");
+  --imageBackground: url("./assets/temp-1.jpeg");
 }
 @utility bg-banner {
   background-image: var(--banner);
+}
+@utility bg-imageBackground {
+  background-image: var(--imageBackground);
 }
